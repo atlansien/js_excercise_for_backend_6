@@ -17,7 +17,7 @@
 ### 課題をクリアするためのステップ
 
 1. [ ] package.jsonを作る
-1. [ ] node_modulesをgitのバージョン管理から除外する
+1. [ ] node_modulesをgitのバージョン管理かnら除外する
 1. [ ] 必要なライブラリをインストールする
     - [ ] [express](https://github.com/expressjs/express) を `dependencies` にインストールする
     - [ ] [ejs](https://github.com/mde/ejs) を `dependencies` にインストールする
