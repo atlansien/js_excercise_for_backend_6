@@ -3,10 +3,12 @@ const router = express.Router();
 
 router
     .get('/', (req, res) => {
-        res.render('index');
+        res.send('TOP') // app.jsで動作確認後消す
+        // res.render('index');index.ejs作成後実装
     })
     .get('/quiz', (req, res) => {
-        res.render('about');
+        res.send('QUIZ') // app.jsで動作確認後消す
+        // res.render('about'); about.ejs作成後実装
     });
 
 module.exports = router;
