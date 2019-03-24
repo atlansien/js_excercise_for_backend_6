@@ -93,7 +93,7 @@ const makeQuiz = quiz => {
 };
 
 shuffle = quiz => {
-  answers = quiz.incorrect_answers.concat(quiz.correct_answer);
+  const answers = quiz.incorrect_answers.concat(quiz.correct_answer);
   for (let i = answers.length - 1; i >= 0; i--) {
     let rand = Math.floor(Math.random() * (i + 1));
 
