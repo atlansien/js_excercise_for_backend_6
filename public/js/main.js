@@ -2,8 +2,8 @@ const API_URL = "https://opentdb.com/api.php?amount=10&type=multiple";
 
 const gameState = {
   quizzes: [],
-  currentIndex: [],
-  numberOfCurrent: []
+  currentIndex: 0,
+  numberOfCurrent: 0
 };
 
 const questionIndex = document.getElementById("question");
@@ -14,8 +14,6 @@ const restartButton = document.getElementById("restart-button");
 window.addEventListener("load", event => {
   fetchQuizData();
 });
-
-// 「Restart」ボタンをクリックしたら再度クイズデータを取得する
 
 restartButton.addEventListener("click", event => {
   fetchQuizData();
@@ -29,8 +27,24 @@ const fetchQuizData = async () => {
   try {
     const response = await fetch(API_URL);
     const data = await response.json();
-    console.log(data);
+    gameState.quizzes = data.results;
+    setNextQuiz();
   } catch {
     console.log("loading error");
   }
+};
+
+const setNextQuiz = () => {
+  questionIndex.textContent = "";
+  while (answersList.firstChild) {
+    document.removeChild(answersList.firstChild);
+  }
+  if (gameState.numberOfCurrent <= gameState.quizzes.length) {
+    makeQuiz();
+  } else {
+  }
+};
+
+makeQuiz = () => {
+  console.log(gameState.quizzes);
 };
