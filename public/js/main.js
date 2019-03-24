@@ -66,13 +66,13 @@ const finishQuiz = () => {
 };
 
 const makeQuiz = quiz => {
-  console.log(gameState.quizzes);
   questionIndex.textContent = unescapeHTML(quiz.question);
 
   const answers = shuffle(quiz);
 
   answers.forEach(answer => {
     const liElement = document.createElement("li");
+    liElement.className = "button";
     liElement.textContent = unescapeHTML(answer);
     answersList.appendChild(liElement);
 
