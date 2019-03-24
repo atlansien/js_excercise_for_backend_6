@@ -20,8 +20,9 @@ restartButton.addEventListener("click", event => {
 });
 
 const fetchQuizData = async () => {
+  resetGameState();
   questionIndex.textContent = "Now loading...";
-  resultIndex.value = "";
+  resultIndex.textContent = "";
   restartButton.hidden = true;
 
   try {
@@ -34,20 +35,35 @@ const fetchQuizData = async () => {
   }
 };
 
+const resetGameState = () => {
+  gameState.quizzes = [];
+  gameState.currentIndex = 0;
+  gameState.numberOfCurrent = 0;
+};
+
 const setNextQuiz = () => {
   questionIndex.textContent = "";
-  while (answersList.firstChild) {
-    answersList.removeChild(answersList.firstChild);
-  }
+  removeChild();
   if (gameState.currentIndex < gameState.quizzes.length) {
     const quiz = gameState.quizzes[gameState.currentIndex];
     makeQuiz(quiz);
   } else {
-    console.log("end");
+    finishQuiz();
   }
 };
 
-const finishQuiz = () => {};
+const removeChild = () => {
+  while (answersList.firstChild) {
+    answersList.removeChild(answersList.firstChild);
+  }
+};
+
+const finishQuiz = () => {
+  resultIndex.textContent = `${gameState.numberOfCurrent}/${
+    gameState.currentIndex
+  }`;
+  restartButton.hidden = false;
+};
 
 const makeQuiz = quiz => {
   console.log(gameState.quizzes);
@@ -59,12 +75,15 @@ const makeQuiz = quiz => {
     const liElement = document.createElement("li");
     liElement.textContent = unescapeHTML(answer);
     answersList.appendChild(liElement);
+
     liElement.addEventListener("click", event => {
       if (answer === quiz.correct_answer) {
         alert(`Correct answer!!`);
         gameState.numberOfCurrent++;
       } else {
-        alert(`Wrong answer... (The correct answer is　${quiz.correct_answer}`);
+        alert(
+          `Wrong answer... (The correct answer is "${quiz.correct_answer}")`
+        );
       }
 
       gameState.currentIndex++;
@@ -76,10 +95,8 @@ const makeQuiz = quiz => {
 shuffle = quiz => {
   answers = quiz.incorrect_answers.concat(quiz.correct_answer);
   for (let i = answers.length - 1; i >= 0; i--) {
-    // 0~iのランダムな数値を取得
     let rand = Math.floor(Math.random() * (i + 1));
 
-    // 配列の数値を入れ替える
     [answers[i], answers[rand]] = [answers[rand], answers[i]];
   }
   return answers;
